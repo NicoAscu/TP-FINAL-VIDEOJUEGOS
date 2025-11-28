@@ -2,27 +2,32 @@
 
 public class ButtonPress_Emissive : MonoBehaviour
 {
-    // Referencia al Renderer del objeto Puerta
+    // Objeto Renderer de la Puerta (para cambiar su material).
     public Renderer doorRenderer; 
     
-    // El material que queremos aplicar al ser presionado (debe tener la emisión activa)
+    // Material de la Puerta con la propiedad Emission ACTIVA.
     public Material activatedDoorMaterial; 
     
-    // Opcional: Material para el botón al ser presionado
+    // Opcional: Material para el botón al ser presionado.
     public Material pressedButtonMaterial; 
     
+    // Controla que el botón solo pueda ser activado una vez.
     private bool activated = false;
 
     void OnCollisionEnter(Collision collision)
     {
         if (activated) return;
 
-        // 1. Verificar colisión con el objeto lanzado
+        // Comprueba si el objeto que colisionó tiene el Tag "ThrownObject"
         if (collision.gameObject.CompareTag("ThrownObject"))
         {
             activated = true;
-            Debug.Log("🎉 Botón Activado. Activando Emisión en la Puerta..."); 
+            Debug.Log("🎉 Botón Activado. Estado de victoria marcado y Puerta Iluminada."); 
             
+            // 1. MARCA LA CONDICIÓN DE VICTORIA GLOBAL
+            // El script WinCondition.cs verificará esta variable.
+            GameManager.ButtonPressed = true;
+
             // 2. Cambiar material del botón (feedback)
             if (pressedButtonMaterial != null)
                 GetComponent<Renderer>().material = pressedButtonMaterial;

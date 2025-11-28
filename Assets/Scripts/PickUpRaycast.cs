@@ -2,11 +2,11 @@
 
 public class PickUpRaycast : MonoBehaviour
 {
-    public float rayDistance = 3f; // Distancia máxima para raycasting
-    public LayerMask grabbableLayer; // Filtro por la capa Grabbable
-    public GameObject uiPressE; // Referencia al texto UI
-    public Transform holdPoint; // Punto donde se sostiene el objeto
-    public float throwForce = 15f; // Fuerza de lanzamiento
+    public float rayDistance = 3f;
+    public LayerMask grabbableLayer; 
+    public GameObject uiPressE;
+    public Transform holdPoint;
+    public float throwForce = 15f;
     
     private GameObject heldObject;
 
@@ -20,16 +20,13 @@ public class PickUpRaycast : MonoBehaviour
 
     void HandleRaycast()
     {
-        // Raycast desde el centro de la cámara
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
 
-        // Dibuja el Raycast en la escena para debug (solo visible en el Scene View)
         Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.yellow); 
 
         if (Physics.Raycast(ray, out hit, rayDistance, grabbableLayer))
         {
-            // Si el rayo impacta un objeto en la capa 'Grabbable'
             if (uiPressE != null) uiPressE.SetActive(true);
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -39,7 +36,6 @@ public class PickUpRaycast : MonoBehaviour
         }
         else
         {
-            // Si no mira un objeto 'Grabbable'
             if (uiPressE != null) uiPressE.SetActive(false);
         }
     }
